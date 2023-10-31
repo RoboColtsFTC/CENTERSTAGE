@@ -4,14 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autons.AutoCommon;
 import org.firstinspires.ftc.teamcode.drivetrain.DrivetrainCommon_ALT1;
-import org.firstinspires.ftc.teamcode.lift.LiftClawCommon;
-import org.firstinspires.ftc.teamcode.sensors.SensorsCommon;
+
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public final class Robot {
-
     public static LinearOpMode curOpMode;
     public static AutoCommon auton;
     public static Gamepad driver;
@@ -44,13 +42,12 @@ public final class Robot {
         }
 
         if(liftAdded) {
-            LiftClawCommon.initLiftClawCommon();
-            hasLift = liftAdded;
+
         }
 
         if(sensorsAdded)
         {
-            SensorsCommon.initSensorsCommon();
+
         }
 
         if(autonAdded)

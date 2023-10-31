@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.drivetrain;
 
 import static org.firstinspires.ftc.teamcode.Robot.hwMap;
 
+import com.qualcomm.hardware.bosch.BHI260IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -14,6 +16,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DigitalChannelController;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.hardware.rev.RevTouchSensor;
@@ -28,20 +31,21 @@ public final class DrivetrainHardware  {
     public static DcMotorEx  driveLF  = null;
     public static DcMotorEx  driveRF  = null;
 
-    public static BNO055IMU imu;
+    public static BHI260IMU imu;
 
     private static ElapsedTime period  = new ElapsedTime();
 
-    public static BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+    public static RevHubOrientationOnRobot orientationOnRobot;
 
     public static void initDrivetrainHardware(){
-        //BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled      = false;
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.UP;
+        orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
 
-        imu = hwMap.get(BNO055IMU.class, "imu");
-        imu.initialize(parameters);
+        imu = hwMap.get(BHI260IMU.class, "imu");
+        imu.initialize(new IMU.Parameters(orientationOnRobot));
+
+        imu.resetYaw();
 
         driveRR = hwMap.get(DcMotorEx.class, "drive_RR");
         driveLR = hwMap.get(DcMotorEx.class, "drive_LR");

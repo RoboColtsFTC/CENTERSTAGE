@@ -16,6 +16,7 @@ import static org.firstinspires.ftc.teamcode.drivetrain.DrivetrainHardware.imu;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Func;
@@ -26,9 +27,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.PIDController;
 import org.firstinspires.ftc.teamcode.autons.AutoCommon;
-import org.firstinspires.ftc.teamcode.lift.LiftClawCommon;
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.sensors.SensorsHardware;
 
 import java.util.Locale;
 
@@ -125,7 +124,7 @@ public final class DrivetrainCommon_ALT1 {
 
         DrivetrainHardware.initDrivetrainHardware();
 
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         //vuforia = new VuforiaCommon(curOpMode);
 
@@ -149,13 +148,14 @@ public final class DrivetrainCommon_ALT1 {
 
         DrivetrainLoopState = Robot.LoopStates.Running;
 
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         currentAngle=angles.firstAngle;
 
         if(driver.back)
         {
-            imu.initialize(DrivetrainHardware.parameters);
+            imu.initialize(new IMU.Parameters(DrivetrainHardware.orientationOnRobot));
+            imu.resetYaw();
         }
 
         if(driver.start && driver.a)
@@ -324,17 +324,6 @@ public final class DrivetrainCommon_ALT1 {
                 xVal = slowPower;
             }
 
-            if (curOpMode.gamepad2.right_stick_button && AutoCommon.autoPickDropEnabled && !autoSequenceRunning ) {
-                autoSequenceRunning=true;
-                AutoCommon.autoPickDropAuton(true);
-                autoSequenceRunning=false;
-                AutoCommon.autoPickDropEnabled=false;
-            }
-            else if(curOpMode.gamepad2.right_stick_button)
-            {
-                AutoCommon.autoPickDropEnabled=false;
-                AutoCommon.checkConesAuton();
-            }
 
             if(!autoSequenceRunning) {
                 executeDriveToFieldCoordinates(xVal, yVal);
@@ -815,7 +804,7 @@ public final class DrivetrainCommon_ALT1 {
      */
     public static void resetAngle()
     {
-        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        lastAngles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         globalAngle = 0;
 
@@ -835,7 +824,7 @@ public final class DrivetrainCommon_ALT1 {
         // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
         // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
-        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        Orientation angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
 

@@ -11,15 +11,13 @@ import static org.firstinspires.ftc.teamcode.drivetrain.DrivetrainHardware.drive
 import static org.firstinspires.ftc.teamcode.drivetrain.DrivetrainHardware.driveLR;
 import static org.firstinspires.ftc.teamcode.drivetrain.DrivetrainHardware.driveRF;
 import static org.firstinspires.ftc.teamcode.drivetrain.DrivetrainHardware.driveRR;
-import static org.firstinspires.ftc.teamcode.lift.LiftClawCommon.goToPos;
-import static org.firstinspires.ftc.teamcode.lift.LiftClawCommon.openClaw;
+
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.vuforia.CameraDevice;
 
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -29,9 +27,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.drivetrain.DrivetrainCommon_ALT1;
 import org.firstinspires.ftc.teamcode.drivetrain.DrivetrainHardware;
-import org.firstinspires.ftc.teamcode.lift.LiftClawCommon;
-import org.firstinspires.ftc.teamcode.sensors.SensorsCommon;
-import org.firstinspires.ftc.teamcode.sensors.SensorsHardware;
+import org.firstinspires.ftc.teamcode.vision.Camera;
 
 
 public final class AutoCommon {
@@ -39,8 +35,9 @@ public final class AutoCommon {
 
 //    public DrivetrainCommon_ALT1 drivetrain;
 
+    public Camera camera;
+
     public VectorF blockLoc = null;
-    public CameraDevice vufCam = null;
     public static boolean autoPickDropEnabled = false;
     private static final ElapsedTime runtime = new ElapsedTime();
 
@@ -55,15 +52,15 @@ public final class AutoCommon {
 
     static double correction;
 
-   /// public static AutoCommon(LinearOpMode owningOpMode, boolean red) {
-
-         // curOpMode = owningOpMode;
-
+//   / public static AutoCommon(LinearOpMode owningOpMode, boolean red) {
+//
+//          curOpMode = owningOpMode;
+//
 //        DrivetrainCommon_ALT1.initDrivetrainCommon_ALT1();
 //        LiftClawCommon.initLiftClawCommon();
 //        drivetrain = new DrivetrainCommon_ALT1(curOpMode);
-
-    //}
+//
+//    }
 
 
     /*
@@ -167,200 +164,6 @@ public final class AutoCommon {
     static double liftSpeed=1;
     static double driveSpeed=.5;
 
-    public static void autoDropConeOnJunction(int pos, boolean right) throws InterruptedException {
-        goToPos(liftSpeed, pos, 10);
-
-        boolean done = false;
-
-        while(!done){
-            done = scanForPole(right);
-            Thread.sleep(150);
-        }
-
-        if(done) {
-
-            boolean isIn = false;
-
-            while (!isIn) {
-                isIn = driveIntoPole();
-            }
-
-            if (isIn) {
-                Thread.sleep(100);
-
-                openClaw();
-
-                Thread.sleep(100);
-
-                encoderDrive(driveSpeed, -300, 10, false);
-            }
-        }
-
-    }
-
-    public static boolean continueAutoPick(boolean teleOp)
-    {
-        boolean autoOk;
-
-        if(teleOp && !Robot.operator.right_stick_button)
-        {
-            autoOk=false;
-        }
-        else
-        {
-            autoOk=true;
-        }
-
-        return autoOk;
-    }
-
-
-  public static void autoPickDropAuton(boolean teleOp)
-    {
-
-        DrivetrainCommon_ALT1.correction=0;
-
-        SensorsCommon.updateDistanceValues();
-
-        if(teleOp) {
-            LiftClawCommon.reduceConeStackCount();
-        }
-
-        LiftClawCommon.clearConeStack(false);
-
-//        if(teleOp){
-        while(SensorsCommon.centerVal > autoPickDistance
-                && Robot.curOpMode.opModeIsActive() && autoPickDropEnabled
-                && continueAutoPick(teleOp)) {
-
-            //Clear,drive forward
-            if(checkConesAuton() && Robot.curOpMode.opModeIsActive()
-                    && SensorsCommon.centerVal > autoPickDistance
-                    && continueAutoPick(teleOp)) {
-
-                if(SensorsCommon.centerVal>5) {
-
-                    executeDrive(0, autoDrivePower);
-                }
-                else
-                {
-                    executeDrive(0, autoDriveSlowPower);
-                }
-
-            }
-            //Shift Right
-            if (!checkConesAuton() && SensorsCommon.leftVal < SensorsCommon.rightVal || SensorsCommon.leftValBU < SensorsCommon.rightValBU
-                && continueAutoPick(teleOp)) {
-
-                executeDrive(autoStrafePower, 0);
-
-            }
-            //Shift Left
-            if (!checkConesAuton() && SensorsCommon.leftVal > SensorsCommon.rightVal || SensorsCommon.leftValBU > SensorsCommon.rightValBU
-                && continueAutoPick(teleOp)) {
-
-                executeDrive(-autoStrafePower, 0);
-            }
-        }
-        executeDrive(0,0);
-
-        if(SensorsCommon.centerVal< autoPickDistance && continueAutoPick(teleOp) && autoPickDropEnabled) {
-
-            pickFromStackAuton(teleOp);
-
-        }
-
-    }
-
-    public static void pickFromStackAuton(boolean teleOp)
-    {
-        LiftClawCommon.nextConeInStack(false);
-
-        LiftClawCommon.closeClaw();
-
-        LiftClawCommon.clearConeStack(false);
-        if(teleOp) {
-            while (continueAutoPick(teleOp)) {
-
-                executeDrive(0, -autoDrivePower);
-
-            }
-        }
-    }
-    public static boolean checkConesAuton() {
-
-        SensorsCommon.updateDistanceValues();
-
-        boolean clear = false;
-
-        double distanceThreshold = 20;
-
-        if((
-                //(( (centerVal - rightVal) <-1.5)  && ((centerVal-leftVal) <-1.5)) ||
-                (((SensorsCommon.centerVal+1.5)<SensorsCommon.rightVal)  && ((SensorsCommon.centerVal+1.5)<SensorsCommon.leftVal)) )
-                && SensorsCommon.centerVal<distanceThreshold)
-        {
-            SensorsHardware.greenLed.setState(true);
-            SensorsHardware.redLed.setState(false);
-
-            SensorsHardware.greenLed2.setState(true);
-            SensorsHardware.redLed2.setState(false);
-
-            clear = true;
-            autoPickDropEnabled=true;
-        }
-
-        else if ((Math.abs(SensorsCommon.leftVal-SensorsCommon.rightVal)>1.5)
-                && (SensorsCommon.leftVal<distanceThreshold || SensorsCommon.rightVal<distanceThreshold))
-        {
-            //need to shift left
-            if(SensorsCommon.leftVal<SensorsCommon.rightVal) {
-
-                SensorsHardware.greenLed.setState(false);
-                SensorsHardware.redLed.setState(true);
-
-
-                SensorsHardware.greenLed2.setState(true);
-                SensorsHardware.redLed2.setState(false);
-
-            }
-            //need to shift right
-            else if(SensorsCommon.leftVal>SensorsCommon.rightVal)
-            {
-                SensorsHardware.greenLed.setState(true);
-                SensorsHardware.redLed.setState(false);
-
-                SensorsHardware.greenLed2.setState(false);
-                SensorsHardware.redLed2.setState(true);
-
-            }
-            autoPickDropEnabled=true;
-            clear=false;
-        }
-        else if((SensorsCommon.centerVal<distanceThreshold) && (SensorsCommon.centerVal<SensorsCommon.leftVal) && SensorsCommon.centerVal<SensorsCommon.rightVal)
-        {
-            SensorsHardware.greenLed.setState(true);
-            SensorsHardware.redLed.setState(false);
-
-            SensorsHardware.greenLed2.setState(true);
-            SensorsHardware.redLed2.setState(false);
-
-            clear = true;
-            autoPickDropEnabled=true;
-        }
-        else
-        {
-
-//            autoPickDropEnabled=false;
-            SensorsHardware.greenLed.setState(false);
-            SensorsHardware.redLed.setState(false);
-
-            SensorsHardware.greenLed2.setState(false);
-            SensorsHardware.redLed2.setState(false);
-        }
-        return clear;
-    }
-
     public static void turnToAngleAuton(double target)
     {
 
@@ -408,7 +211,7 @@ public final class AutoCommon {
             driveRF.setPower(power*direction);
             driveRR.setPower(power*direction);
 
-            DrivetrainCommon_ALT1.angles = DrivetrainHardware.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            DrivetrainCommon_ALT1.angles = DrivetrainHardware.imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
             if(target==180)
             {
@@ -822,7 +625,6 @@ public final class AutoCommon {
         VectorF blockLoc = null;
 
         if (objectDetection) {
-            CameraDevice.getInstance().setFlashTorchMode(true);
         }
 
         while (curOpMode.opModeIsActive() &&
@@ -859,7 +661,6 @@ public final class AutoCommon {
         }
 
         if (objectDetection) {
-            CameraDevice.getInstance().setFlashTorchMode(false);
         }
 
         driveLF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -901,7 +702,6 @@ public final class AutoCommon {
 
         VectorF blockLoc = null;
 
-        CameraDevice.getInstance().setFlashTorchMode(true);
 
         while (curOpMode.opModeIsActive() &&
                 (runtime.seconds() < timeoutS) && (sensor.getDistance(DistanceUnit.CM) < distance)) {
@@ -929,7 +729,6 @@ public final class AutoCommon {
  */
         }
 
-        CameraDevice.getInstance().setFlashTorchMode(false);
 
         driveLF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driveRF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -979,70 +778,6 @@ public final class AutoCommon {
 
     }
 
-    static boolean outerPassed = false;
-
-    static boolean isDone = false;
-
-    public static boolean scanForPole(boolean goingRight){
-
-        SensorsCommon.updateDistanceValues();
-        //double right = leftConeCheck.getDistance(DistanceUnit.INCH);
-        //double left = rightConeCheck.getDistance(DistanceUnit.INCH);
-        //double center = centerCheck.getDistance(DistanceUnit.INCH);
-
-
-        if (!goingRight) {
-            if ((SensorsCommon.rightVal >10 && !outerPassed)) {
-                executeDrive(-.1,0);
-            }
-            if (SensorsCommon.rightVal <10|| SensorsCommon.leftVal <10) {
-                outerPassed = true;
-            }
-            if ((SensorsCommon.rightVal >10 && outerPassed)) {
-                executeDrive(0,0);
-                isDone = true;
-//                outerPassed = false;
-            }
-        } else {
-            if ((SensorsCommon.leftVal > 10) && !outerPassed) {
-                executeDrive(.1,0);
-            }
-            if (SensorsCommon.leftVal < 10 || SensorsCommon.rightVal < 10) {
-                outerPassed = true;
-            }
-            if ((SensorsCommon.leftVal > 10) && outerPassed) {
-                executeDrive(0,0);
-                isDone = true;
-//                outerPassed = false;
-            }
-        }
-
-        return isDone;
-    }
-
-    public static boolean isIn = false;
-    public static boolean junctionPassed = false;
-
-    public static boolean driveIntoPole(){
-//        if (SensorsHardware.junctionDriveDirCheck.getDistance(DistanceUnit.INCH) > 300
-//           || SensorsHardware.junctionDriveDirCheckBU.getDistance(DistanceUnit.INCH) > 300) {
-            encoderDrive(.2, 500, 1, false);
-            isIn = true;
-//        } else {
-//            if (SensorsHardware.junctionDriveDirCheck.getDistance(DistanceUnit.INCH) < 3.5
-//            || SensorsHardware.junctionDriveDirCheckBU.getDistance(DistanceUnit.INCH) < 3.5) {
-//                junctionPassed = true;
-//            }
-//            if(!junctionPassed){
-//                executeDrive(0, .2);
-//            } else {
-//                executeDrive(0, 0);
-//                isIn = true;
-//            }
-//        }
-
-        return isIn;
-    }
 
     public static void driveToEnd(double driveSpeed, int pos, boolean high, boolean right){
         if(right) {

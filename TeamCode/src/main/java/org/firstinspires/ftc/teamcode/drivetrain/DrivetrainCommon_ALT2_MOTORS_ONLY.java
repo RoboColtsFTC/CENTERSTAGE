@@ -12,7 +12,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.PIDController;
-import org.firstinspires.ftc.teamcode.lift.LiftClawCommon;
 
 import java.util.Locale;
 
@@ -92,7 +91,6 @@ public class DrivetrainCommon_ALT2_MOTORS_ONLY {
     double baseLineDist,leftMax,rightMax,centerMin,foreMin,aftMin;
 
     double leftVal, rightVal,centerVal, foreVal, aftVal;
-    public LiftClawCommon liftClaw;
 
     boolean autoSequenceRunning=false;
 
