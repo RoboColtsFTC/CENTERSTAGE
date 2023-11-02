@@ -41,36 +41,6 @@ public class RedLeftStay extends LinearOpMode {
 
         // Start
 
-        AutoCommon.encoderDrive(driveSpeed, 1000, 10, true);
-
-        // Left
-        if(pos == 0){
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, true, true, false);
-
-            // Score the thing
-            sleep(2000);
-
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, false, true, false);
-
-            AutoCommon.encoderDrive(driveSpeed, 300, 10, true);
-
-        // Center
-        } else if (pos == 1){
-            AutoCommon.encoderDrive(driveSpeed, 300, 10, true);
-
-            // Score the thing
-            sleep(2000);
-
-        // Right
-        } else {
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, false, true, false);
-
-            // Score the thing
-            sleep(2000);
-
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, true, true, false);
-
-            AutoCommon.encoderDrive(driveSpeed, 300, 10, true);
-        }
+        CommonPrograms.redLeftStart(pos);
     }
 }

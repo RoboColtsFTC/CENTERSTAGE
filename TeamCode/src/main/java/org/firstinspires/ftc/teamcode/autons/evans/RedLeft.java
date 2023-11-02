@@ -9,6 +9,8 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.autons.AutoCommon;
 import org.firstinspires.ftc.teamcode.vision.Camera;
 
+//import org.firstinspires.ftc.teamcode.autons.Common
+
 @Autonomous(name="Red Left", group="OnBot")
 
 public class RedLeft extends LinearOpMode {
@@ -42,39 +44,9 @@ public class RedLeft extends LinearOpMode {
 
         // Start
 
-        AutoCommon.encoderDrive(driveSpeed, 1000, 10, true);
+        pos = 0;
 
-        pos = 2;
-
-        // Left
-        if(pos == 0){
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 500, true, true, false);
-
-            // Score the thing
-            sleep(2000);
-
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 500, false, true, false);
-
-            AutoCommon.encoderDrive(driveSpeed, 300, 10, true);
-
-        // Center
-        } else if (pos == 1){
-            AutoCommon.encoderDrive(driveSpeed, 300, 10, true);
-
-            // Score the thing
-            sleep(2000);
-
-        // Right
-        } else {
-            AutoCommon.encoderDrive(driveSpeed, 300, 10, true);
-
-            AutoCommon.encoderTurn(.5, -750, 10);
-
-            // Score the thing
-            sleep(2000);
-
-            AutoCommon.encoderTurn(.5, 750, 10);
-        }
+        CommonPrograms.redLeftStart(pos);
 
         AutoCommon.encoderDrive(driveSpeed, 1000, 10, true);
 

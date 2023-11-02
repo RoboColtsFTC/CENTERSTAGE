@@ -41,37 +41,9 @@ public class RedRight extends LinearOpMode {
 
         // Start
 
-        AutoCommon.encoderDrive(driveSpeed, 1000, 10, true);
-
         pos = 2;
 
-        // Left
-        if(pos == 0){
-            AutoCommon.encoderTurn(.5, 750, 10);
-
-            // Score the thing
-            sleep(2000);
-
-            AutoCommon.encoderTurn(.5, -750, 10);
-
-        // Center
-        } else if (pos == 1){
-            AutoCommon.encoderDrive(driveSpeed, 300, 10, true);
-
-            // Score the thing
-            sleep(2000);
-
-            AutoCommon.encoderDrive(driveSpeed, -300, 10, true);
-
-        // Right
-        } else {
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 500, false, true, false);
-
-            // Score the thing
-            sleep(2000);
-
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 500, true, true, false);
-        }
+        CommonPrograms.redRightStart(pos);
 
 //        AutoCommon.turnToAngleAuton(-90);
         AutoCommon.encoderTurn(.5, -750, 10);

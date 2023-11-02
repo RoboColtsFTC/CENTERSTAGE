@@ -41,36 +41,8 @@ public class RedRightParkOnly extends LinearOpMode {
 
         // Start
 
-        AutoCommon.encoderDrive(driveSpeed, 1000, 10, true);
+        CommonPrograms.redRightStart(pos);
 
-        // Left
-        if(pos == 0){
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, true, true, false);
-
-            // Score the thing
-            sleep(2000);
-
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, false, true, false);
-
-        // Center
-        } else if (pos == 1){
-            AutoCommon.encoderDrive(driveSpeed, 300, 10, true);
-
-            // Score the thing
-            sleep(2000);
-
-            AutoCommon.encoderDrive(driveSpeed, -300, 10, true);
-
-        // Right
-        } else {
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, false, true, false);
-
-            // Score the thing
-            sleep(2000);
-
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, true, true, false);
-        }
-        
         AutoCommon.turnToAngleAuton(-90);
 
         AutoCommon.encoderStrafe(strafeSpeed, 10, 1000, false, true, false);
