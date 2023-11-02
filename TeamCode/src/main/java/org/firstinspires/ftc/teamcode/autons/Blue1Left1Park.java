@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.autons;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Robot;
 
 @Autonomous(name="Blue1Left1Park", group="OnBot")
-
+@Disabled
 public class Blue1Left1Park extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 

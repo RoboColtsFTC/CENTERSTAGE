@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.drivetrain.DrivetrainCommon_ALT1.executeDrivetrainTeleop;
+import static org.firstinspires.ftc.teamcode.manipulator.ManipulatorCommon.executeManipulatorTeleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -17,9 +18,7 @@ public class TeleopAll extends LinearOpMode {
     public void runOpMode() {
 
         Robot.DrivetrainLoopState = Robot.LoopStates.Completed;
-        Robot.init(true,false,false,true,true,this);
-
-
+        Robot.init(true,true,false,true,true,this);
 
         waitForStart();
 
@@ -29,7 +28,7 @@ public class TeleopAll extends LinearOpMode {
                 executeDrivetrainTeleop();
 //            }
 
-
+            executeManipulatorTeleop();
 
             Robot.curOpMode.telemetry.addData("LF:",DrivetrainHardware.driveLF.getCurrentPosition());
             Robot.curOpMode.telemetry.addData("RF:",DrivetrainHardware.driveRF.getCurrentPosition());

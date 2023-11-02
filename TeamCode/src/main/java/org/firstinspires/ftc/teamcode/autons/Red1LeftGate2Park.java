@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.autons;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -8,11 +9,11 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.vision.Camera;
 
 @Autonomous(name="Red1LeftGate2Park", group="OnBot")
-
+@Disabled
 public class Red1LeftGate2Park extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
-    AutoCommon auto=null;
+//    AutoCommon auto=null;
 
     boolean red=true;
 
@@ -22,7 +23,6 @@ public class Red1LeftGate2Park extends LinearOpMode {
     Camera camera;
 
     int pos;
-
 
     @Override
     public void runOpMode() {

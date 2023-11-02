@@ -41,7 +41,6 @@ public final class AutoCommon {
     public static boolean autoPickDropEnabled = false;
     private static final ElapsedTime runtime = new ElapsedTime();
 
-
     public static double autoPickDistance=1.75;
     static double autoDrivePower=.3;
     static double autoDriveSlowPower=.15;
