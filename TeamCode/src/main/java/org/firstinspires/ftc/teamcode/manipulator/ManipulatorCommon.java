@@ -113,19 +113,19 @@ public class ManipulatorCommon {
         }
     }
 
-    public void shootAll(){
+    public static void shoot(){
+        shooter.setPower(-.5);
+    }
+
+    public static void releaseGroundPixel(){
 
     }
 
-    public void releaseGroundPixel(){
+    public static void dropIntake() {
 
     }
 
-    public void dropIntake() {
-
-    }
-
-    public void raiseIntake(){
+    public static void raiseIntake(){
 
     }
 }

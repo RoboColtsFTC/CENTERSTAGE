@@ -43,14 +43,16 @@ public class BlueRight extends LinearOpMode {
 
         AutoCommon.encoderDrive(driveSpeed, 1000, 10, true);
 
+        pos = 2;
+
         // Left
         if(pos == 0){
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, true, true, false);
+            AutoCommon.encoderTurn(.5, 750, 10);
 
             // Score the thing
             sleep(2000);
 
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, false, true, false);
+            AutoCommon.encoderTurn(.5, -750, 10);
 
             AutoCommon.encoderDrive(driveSpeed, 300, 10, true);
 
@@ -63,12 +65,12 @@ public class BlueRight extends LinearOpMode {
 
         // Right
         } else {
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, false, true, false);
+            AutoCommon.encoderStrafe(strafeSpeed, 10, 500, false, true, false);
 
             // Score the thing
             sleep(2000);
 
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 250, true, true, false);
+            AutoCommon.encoderStrafe(strafeSpeed, 10, 500, true, true, false);
 
             AutoCommon.encoderDrive(driveSpeed, 300, 10, true);
         }
@@ -79,7 +81,8 @@ public class BlueRight extends LinearOpMode {
 
         AutoCommon.encoderDrive(driveSpeed, -1175, 10, true);
 
-        AutoCommon.turnToAngleAuton(90);
+//        AutoCommon.turnToAngleAuton(90);
+        AutoCommon.encoderTurn(.5, 750, 10);
 
         AutoCommon.encoderDrive(driveSpeed, 1500, 10, true);
 
