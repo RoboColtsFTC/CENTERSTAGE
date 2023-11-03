@@ -75,6 +75,7 @@ public final class AutoCommon {
                                     double timeoutS, boolean pid) {
         double correction = 0;
 
+        encoderValue = -encoderValue;
 
         resetEncoders();
         // Ensure that the opmode is still active
@@ -491,6 +492,8 @@ public final class AutoCommon {
 
     public static VectorF encoderStrafe(double power, double timeoutS, int encoderValue, boolean strafeLeft,
                                         boolean pid, boolean objectDetection) {
+
+        strafeLeft = !strafeLeft;
 
         DrivetrainCommon_ALT1.rotation = getAngle();        // reset angle tracking on new heading.
         DrivetrainCommon_ALT1.resetAngle();

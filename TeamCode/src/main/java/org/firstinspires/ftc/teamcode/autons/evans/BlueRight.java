@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.autons.AutoCommon;
+import org.firstinspires.ftc.teamcode.autons.CommonPrograms;
 import org.firstinspires.ftc.teamcode.vision.Camera;
 
 @Autonomous(name="Blue Right", group="OnBot")

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autons.evans;
+package org.firstinspires.ftc.teamcode.autons;
 
 import static org.firstinspires.ftc.teamcode.Robot.curOpMode;
 
@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.autons.AutoCommon;
+import org.firstinspires.ftc.teamcode.manipulator.ManipulatorCommon;
 import org.firstinspires.ftc.teamcode.vision.Camera;
 
 public class CommonPrograms {
@@ -19,7 +20,7 @@ public class CommonPrograms {
 
 
     public static void redLeftStart(int pos){
-        AutoCommon.encoderDrive(.5, 1000, 10, true);
+        AutoCommon.encoderDrive(.5, 1000, 10, false);
 
         // Left
         if(pos == 0){
@@ -30,18 +31,18 @@ public class CommonPrograms {
 
             AutoCommon.encoderStrafe(.5, 10, 500, false, true, false);
 
-            AutoCommon.encoderDrive(.5, 300, 10, true);
+            AutoCommon.encoderDrive(.5, 300, 10, false);
 
             // Center
         } else if (pos == 1){
-            AutoCommon.encoderDrive(.5, 300, 10, true);
+            AutoCommon.encoderDrive(.5, 300, 10, false);
 
             // Score the thing
             curOpMode.sleep(2000);
 
             // Right
         } else {
-            AutoCommon.encoderDrive(.5, 300, 10, true);
+            AutoCommon.encoderDrive(.5, 300, 10, false);
 
             AutoCommon.encoderTurn(.5, -750, 10);
 
@@ -61,25 +62,25 @@ public class CommonPrograms {
 
 
     public static void redRightStart(int pos){
-        AutoCommon.encoderDrive(.5, 1000, 10, true);
+        AutoCommon.encoderDrive(.5, 1000, 10, false);
 
         // Left
         if(pos == 0){
-            AutoCommon.encoderTurn(.5, 750, 10);
+            AutoCommon.turnToAngleAuton(90);
 
             // Score the thing
             curOpMode.sleep(2000);
 
-            AutoCommon.encoderTurn(.5, -750, 10);
+            AutoCommon.turnToAngleAuton(-90);
 
             // Center
         } else if (pos == 1){
-            AutoCommon.encoderDrive(.5, 300, 10, true);
+            AutoCommon.encoderDrive(.5, 300, 10, false);
 
             // Score the thing
             curOpMode.sleep(2000);
 
-            AutoCommon.encoderDrive(.5, -300, 10, true);
+            AutoCommon.encoderDrive(.5, -300, 10, false);
 
             // Right
         } else {
@@ -100,36 +101,38 @@ public class CommonPrograms {
 
 
     public static void blueRightStart(int pos){
-        AutoCommon.encoderDrive(.5, 1000, 10, true);
+        ManipulatorCommon.lowerArm();
+
+        AutoCommon.encoderDrive(.5, 1000, 10, false);
 
         // Left
         if(pos == 0){
-            AutoCommon.encoderTurn(.5, 750, 10);
+            AutoCommon.turnToAngleAuton(90);
 
             // Score the thing
-            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
 
-            AutoCommon.encoderTurn(.5, -750, 10);
+            AutoCommon.turnToAngleAuton(0);
 
-            AutoCommon.encoderDrive(.5, 300, 10, true);
+            AutoCommon.encoderDrive(.5, 300, 10, false);
 
             // Center
         } else if (pos == 1){
-            AutoCommon.encoderDrive(.5, 300, 10, true);
+            AutoCommon.encoderDrive(.5, 300, 10, false);
 
             // Score the thing
-            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
 
             // Right
         } else {
             AutoCommon.encoderStrafe(.5, 10, 500, false, true, false);
 
             // Score the thing
-            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
 
             AutoCommon.encoderStrafe(.5, 10, 500, true, true, false);
 
-            AutoCommon.encoderDrive(.5, 300, 10, true);
+            AutoCommon.encoderDrive(.5, 300, 10, false);
         }
     }
 
@@ -140,25 +143,31 @@ public class CommonPrograms {
 
 
     public static void blueLeftStart(int pos){
-        AutoCommon.encoderDrive(.5, 1000, 10, true);
+        ManipulatorCommon.lowerArm();
+
+        AutoCommon.encoderDrive(.5, 1000, 10, false);
 
         // Left
         if(pos == 0){
             AutoCommon.encoderStrafe(.5, 10, 500, true, true, false);
 
             // Score the thing
-            curOpMode.sleep(2000);
+//            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
+
 
             AutoCommon.encoderStrafe(.5, 10, 500, false, true, false);
 
             // Center
         } else if (pos == 1){
-            AutoCommon.encoderDrive(.5, 300, 10, true);
+            AutoCommon.encoderDrive(.5, 300, 10, false);
 
             // Score the thing
-            curOpMode.sleep(2000);
+//            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
 
-            AutoCommon.encoderDrive(.5, -300, 10, true);
+
+            AutoCommon.encoderDrive(.5, -300, 10, false);
 
             // Right
         } else {
@@ -166,7 +175,9 @@ public class CommonPrograms {
             AutoCommon.encoderTurn(.5, -750, 10);
 
             // Score the thing
-            curOpMode.sleep(2000);
+//            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
+
 
             AutoCommon.encoderTurn(.5, 750, 10);
         }

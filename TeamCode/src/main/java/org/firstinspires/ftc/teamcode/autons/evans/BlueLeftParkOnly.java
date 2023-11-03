@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.autons.AutoCommon;
+import org.firstinspires.ftc.teamcode.autons.CommonPrograms;
 import org.firstinspires.ftc.teamcode.vision.Camera;
 
 @Autonomous(name="Blue Left Park Only", group="OnBot")
@@ -25,6 +26,8 @@ public class BlueLeftParkOnly extends LinearOpMode {
     @Override
     public void runOpMode() {
 
+        Robot.init(true,true,false,true,false,this);
+
         camera = new Camera(this, red);
 
         while(!opModeIsActive()){
@@ -34,8 +37,6 @@ public class BlueLeftParkOnly extends LinearOpMode {
         }
 
         waitForStart();
-
-        Robot.init(true,false,false,true,false,this);
 
         AutoCommon.resetEncoders();
 
