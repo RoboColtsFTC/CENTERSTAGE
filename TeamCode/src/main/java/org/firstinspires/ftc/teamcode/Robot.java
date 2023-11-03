@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autons.AutoCommon;
 import org.firstinspires.ftc.teamcode.drivetrain.DrivetrainCommon_ALT1;
+import org.firstinspires.ftc.teamcode.manipulator.ManipulatorCommon;
 
 
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -15,7 +16,7 @@ public final class Robot {
     public static Gamepad driver;
     public static Gamepad operator;
     public static HardwareMap hwMap;
-    public static boolean hasLift;
+    public static boolean hasManipulator;
     public static boolean hasDrivetrain;
     public static boolean hasVision;
     public static boolean hasSensors;
@@ -25,7 +26,7 @@ public final class Robot {
     public static LoopStates LiftClawLoopState;
 
 
-    public static void init(boolean drivetrainAdded, boolean liftAdded,
+    public static void init(boolean drivetrainAdded, boolean manipulator,
                             boolean visionAdded, boolean autonAdded,
                             boolean sensorsAdded,
                             LinearOpMode opMode)
@@ -41,8 +42,9 @@ public final class Robot {
             hasDrivetrain = drivetrainAdded;
         }
 
-        if(liftAdded) {
-
+        if(manipulator) {
+            ManipulatorCommon.initManipulatorCommon();
+            hasManipulator = manipulator;
         }
 
         if(sensorsAdded)
