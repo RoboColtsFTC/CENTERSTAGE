@@ -177,6 +177,8 @@ public class ManipulatorCommon {
     }
 
     public static void shoot(){
+        lift.setPosition(.5);
+        curOpMode.sleep(1000);
         shooter.setPower(.25);
         output.setPower(-1);
         curOpMode.sleep(1500);

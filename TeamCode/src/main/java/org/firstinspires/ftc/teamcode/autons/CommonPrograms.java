@@ -20,6 +20,8 @@ public class CommonPrograms {
 
 
     public static void redLeftStart(int pos){
+        ManipulatorCommon.lowerArm();
+
         AutoCommon.encoderDrive(.5, 1000, 10, false);
 
         // Left
@@ -59,6 +61,8 @@ public class CommonPrograms {
 
 
     public static void redRightStart(int pos){
+        ManipulatorCommon.lowerArm();
+
         AutoCommon.encoderDrive(.5, 1000, 10, false);
 
         // Left

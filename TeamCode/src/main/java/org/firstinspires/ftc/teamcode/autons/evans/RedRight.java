@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.autons.AutoCommon;
 import org.firstinspires.ftc.teamcode.autons.CommonPrograms;
+import org.firstinspires.ftc.teamcode.manipulator.ManipulatorCommon;
 import org.firstinspires.ftc.teamcode.vision.Camera;
 
 @Autonomous(name="Red Right", group="OnBot")
@@ -54,15 +55,13 @@ public class RedRight extends LinearOpMode {
         if(pos == 0){
             AutoCommon.encoderStrafe(strafeSpeed, 10, 400, true, true, false);
 
-            // Score the other thing
-            sleep(2000);
+            ManipulatorCommon.shoot();
 
             AutoCommon.encoderStrafe(strafeSpeed, 10, -1600, true, true, false);
 
         // Center
         } else if (pos == 1){
-            // Score the thing
-            sleep(2000);
+            ManipulatorCommon.shoot();
 
             AutoCommon.encoderStrafe(strafeSpeed, 10, -1100, true, true, false);
 
@@ -70,8 +69,7 @@ public class RedRight extends LinearOpMode {
         } else {
             AutoCommon.encoderStrafe(strafeSpeed, 10, -400, true, true, false);
 
-            // Score the other thing
-            sleep(2000);
+            ManipulatorCommon.shoot();
 
             AutoCommon.encoderStrafe(strafeSpeed, 10, -750, true, true, false);
 
