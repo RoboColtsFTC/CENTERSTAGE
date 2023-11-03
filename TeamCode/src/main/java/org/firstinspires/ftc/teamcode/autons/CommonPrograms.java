@@ -26,8 +26,7 @@ public class CommonPrograms {
         if(pos == 0){
             AutoCommon.encoderStrafe(.5, 10, 500, true, true, false);
 
-            // Score the thing
-            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
 
             AutoCommon.encoderStrafe(.5, 10, 500, false, true, false);
 
@@ -37,8 +36,7 @@ public class CommonPrograms {
         } else if (pos == 1){
             AutoCommon.encoderDrive(.5, 300, 10, false);
 
-            // Score the thing
-            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
 
             // Right
         } else {
@@ -46,8 +44,7 @@ public class CommonPrograms {
 
             AutoCommon.encoderTurn(.5, -750, 10);
 
-            // Score the thing
-            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
 
             AutoCommon.encoderTurn(.5, 750, 10);
         }
@@ -68,8 +65,7 @@ public class CommonPrograms {
         if(pos == 0){
             AutoCommon.turnToAngleAuton(90);
 
-            // Score the thing
-            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
 
             AutoCommon.turnToAngleAuton(-90);
 
@@ -77,8 +73,7 @@ public class CommonPrograms {
         } else if (pos == 1){
             AutoCommon.encoderDrive(.5, 300, 10, false);
 
-            // Score the thing
-            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
 
             AutoCommon.encoderDrive(.5, -300, 10, false);
 
@@ -86,8 +81,7 @@ public class CommonPrograms {
         } else {
             AutoCommon.encoderStrafe(.5, 10, 500, false, true, false);
 
-            // Score the thing
-            curOpMode.sleep(2000);
+            ManipulatorCommon.releaseGroundPixel();
 
             AutoCommon.encoderStrafe(.5, 10, 500, true, true, false);
         }
@@ -109,7 +103,6 @@ public class CommonPrograms {
         if(pos == 0){
             AutoCommon.turnToAngleAuton(90);
 
-            // Score the thing
             ManipulatorCommon.releaseGroundPixel();
 
             AutoCommon.turnToAngleAuton(0);
@@ -120,14 +113,12 @@ public class CommonPrograms {
         } else if (pos == 1){
             AutoCommon.encoderDrive(.5, 300, 10, false);
 
-            // Score the thing
             ManipulatorCommon.releaseGroundPixel();
 
             // Right
         } else {
             AutoCommon.encoderStrafe(.5, 10, 500, false, true, false);
 
-            // Score the thing
             ManipulatorCommon.releaseGroundPixel();
 
             AutoCommon.encoderStrafe(.5, 10, 500, true, true, false);
@@ -151,10 +142,7 @@ public class CommonPrograms {
         if(pos == 0){
             AutoCommon.encoderStrafe(.5, 10, 500, true, true, false);
 
-            // Score the thing
-//            curOpMode.sleep(2000);
             ManipulatorCommon.releaseGroundPixel();
-
 
             AutoCommon.encoderStrafe(.5, 10, 500, false, true, false);
 
@@ -162,10 +150,7 @@ public class CommonPrograms {
         } else if (pos == 1){
             AutoCommon.encoderDrive(.5, 300, 10, false);
 
-            // Score the thing
-//            curOpMode.sleep(2000);
             ManipulatorCommon.releaseGroundPixel();
-
 
             AutoCommon.encoderDrive(.5, -300, 10, false);
 
@@ -174,10 +159,7 @@ public class CommonPrograms {
 
             AutoCommon.encoderTurn(.5, -750, 10);
 
-            // Score the thing
-//            curOpMode.sleep(2000);
             ManipulatorCommon.releaseGroundPixel();
-
 
             AutoCommon.encoderTurn(.5, 750, 10);
         }

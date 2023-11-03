@@ -26,6 +26,8 @@ public class BlueRight extends LinearOpMode {
     @Override
     public void runOpMode() {
 
+        Robot.init(true,true,false,true,false,this);
+
         camera = new Camera(this, red);
 
         while(!opModeIsActive()){
@@ -35,8 +37,6 @@ public class BlueRight extends LinearOpMode {
         }
 
         waitForStart();
-
-        Robot.init(true,false,false,true,false,this);
 
         AutoCommon.resetEncoders();
 
@@ -51,8 +51,7 @@ public class BlueRight extends LinearOpMode {
 
         AutoCommon.encoderDrive(driveSpeed, -1175, 10, true);
 
-//        AutoCommon.turnToAngleAuton(90);
-        AutoCommon.encoderTurn(.5, 750, 10);
+        AutoCommon.turnToAngleAuton(90);
 
         AutoCommon.encoderDrive(driveSpeed, 1500, 10, true);
 
