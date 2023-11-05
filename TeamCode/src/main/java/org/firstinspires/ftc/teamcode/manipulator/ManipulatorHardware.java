@@ -16,6 +16,8 @@ public class ManipulatorHardware {
 
     public static Servo lift = null;
 
+//    public static Servo fang = null;
+
     public static void initManipulatorHardware(){
         stage1_1 = hwMap.get(CRServo.class, "stage1_1");
         stage2_1 = hwMap.get(CRServo.class, "stage2_1");
@@ -24,5 +26,6 @@ public class ManipulatorHardware {
         stage1_2 = hwMap.get(CRServo.class, "stage1_2");
         input_lift = hwMap.get(Servo.class, "input_lift");
         lift = hwMap.get(Servo.class, "lift");
+//        fang = hwMap.get(Servo.class, "fang");
     }
 }

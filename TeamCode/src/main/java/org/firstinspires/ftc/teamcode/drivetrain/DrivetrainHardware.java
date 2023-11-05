@@ -32,16 +32,28 @@ public final class DrivetrainHardware  {
     public static DcMotorEx  driveRF  = null;
 
     public static BHI260IMU imu;
+    public static BNO055IMU imu2;
 //    public static BHI260IMU imu;
 
     private static ElapsedTime period  = new ElapsedTime();
 
     public static RevHubOrientationOnRobot orientationOnRobot;
 
+    public static BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+    public final static boolean useControlIMU = false;
+
     public static void initDrivetrainHardware(){
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
         RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.UP;
         orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
+
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled      = false;
+
+        imu2 = hwMap.get(BNO055IMU.class, "imu2");
+        imu2.initialize(parameters);
 
         imu = hwMap.get(BHI260IMU.class, "imu");
         imu.initialize(new IMU.Parameters(orientationOnRobot));

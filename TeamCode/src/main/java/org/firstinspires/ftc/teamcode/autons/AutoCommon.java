@@ -184,10 +184,6 @@ public final class AutoCommon {
         }
         else if(curDiff>=0)
 
-
-
-
-
         {
             direction=-1;
         }

@@ -10,7 +10,7 @@ import static org.firstinspires.ftc.teamcode.drivetrain.DrivetrainHardware.drive
 import static org.firstinspires.ftc.teamcode.drivetrain.DrivetrainHardware.driveRR;
 
 import static org.firstinspires.ftc.teamcode.drivetrain.DrivetrainHardware.imu;
-
+import static org.firstinspires.ftc.teamcode.drivetrain.DrivetrainHardware.imu2;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -124,7 +124,11 @@ public final class DrivetrainCommon_ALT1 {
 
         DrivetrainHardware.initDrivetrainHardware();
 
-        angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        if(DrivetrainHardware.useControlIMU){
+            angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        } else {
+            angles = imu2.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        }
 
         //vuforia = new VuforiaCommon(curOpMode);
 
@@ -148,7 +152,11 @@ public final class DrivetrainCommon_ALT1 {
 
         DrivetrainLoopState = Robot.LoopStates.Running;
 
-        angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        if(DrivetrainHardware.useControlIMU){
+            angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        } else {
+            angles = imu2.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        }
 
         currentAngle=angles.firstAngle;
 
@@ -156,6 +164,8 @@ public final class DrivetrainCommon_ALT1 {
         {
             imu.initialize(new IMU.Parameters(DrivetrainHardware.orientationOnRobot));
             imu.resetYaw();
+
+            imu2.initialize(DrivetrainHardware.parameters);
         }
 
         if(driver.start && driver.a)
@@ -804,7 +814,11 @@ public final class DrivetrainCommon_ALT1 {
      */
     public static void resetAngle()
     {
-        lastAngles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        if(DrivetrainHardware.useControlIMU){
+            angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        } else {
+            angles = imu2.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        }
 
         globalAngle = 0;
 
@@ -824,7 +838,12 @@ public final class DrivetrainCommon_ALT1 {
         // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
         // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
-        Orientation angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        if(DrivetrainHardware.useControlIMU){
+            angles = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        } else {
+            angles = imu2.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        }
 
         double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
 

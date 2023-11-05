@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.autons.evans;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.manipulator.ManipulatorCommon;
 import org.firstinspires.ftc.teamcode.vision.Camera;
 
 @Autonomous(name="Blue Right", group="OnBot")
-
+@Disabled
 public class BlueRight extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 

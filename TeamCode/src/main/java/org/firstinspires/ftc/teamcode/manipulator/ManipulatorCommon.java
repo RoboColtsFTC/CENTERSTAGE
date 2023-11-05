@@ -7,12 +7,19 @@ public class ManipulatorCommon {
 
 //    public static int x;
 
+    public static boolean movable = false;
+
+    public static boolean test = false;
 
     public static void initManipulatorCommon(){
         ManipulatorHardware.initManipulatorHardware();
 
         input_lift.setPosition(.95);
         lift.setPosition(.6);
+
+        movable = false;
+
+        test = false;
 
 
 //        x = 0;
@@ -131,7 +138,7 @@ public class ManipulatorCommon {
             stage1_2.setPower(-1);
             stage2_1.setPower(-1);
         } else if (operator.a) {
-            input_lift.setPosition(.93);
+            input_lift.setPosition(.94);
             stage2_1.setPower(.5);
             stage1_1.setPower(0);
             shooter.setPower(-.3);
@@ -144,50 +151,79 @@ public class ManipulatorCommon {
             stage1_1.setPower(0);
             stage1_2.setPower(0);
             stage2_1.setPower(0);
-            shooter.setPower(0);
-            output.setPower(0);
         }
 
         if(operator.left_trigger > .2){
             input_lift.setPosition(.95);
-            shooter.setPower(operator.left_trigger/2);
-            output.setPower(-operator.left_trigger/5);
+//            if(test){
+//                output.setPower(-operator.left_trigger);
+//                shooter.setPower(operator.left_trigger/1.05);
+//            } else {
+            if(test){
+                output.setPower(-operator.left_trigger/2.25);
+
+            } else {
+                output.setPower(-operator.left_trigger/3.5);
+
+            }
+                shooter.setPower(operator.left_trigger/2.5);
+//            }
+        }
+
+        if(!(operator.left_trigger > .2) && !operator.a && !operator.b){
+            shooter.setPower(0);
+            output.setPower(0);
         }
 
 
         if (operator.right_bumper) {
             input_lift.setPosition(.95);
         } else if (operator.left_bumper) {
-            input_lift.setPosition(0.5955);
+//            input_lift.setPosition(0.5955);
+            input_lift.setPosition(0.585);
         }
 
         if(operator.dpad_up){
-            lift.setPosition(.75);
-        } else if (operator.dpad_down){
-            lift.setPosition(.35);
-        } else if (operator.dpad_right){
-            lift.setPosition(.5);
-        } else if (operator.dpad_left){
-            lift.setPosition(.6);
+            lift.setPosition(.65);
+            movable = true;
         }
 
-        if(operator.start){
-            shoot();
+        if(movable){
+            if (operator.dpad_down){
+                lift.setPosition(.35);
+                test = false;
+            } else if (operator.dpad_right){
+                lift.setPosition(.6);
+                test = true;
+            } else if (operator.dpad_left){
+                lift.setPosition(.3);
+                test = false;
+            }
         }
+
+//        if(operator.left_stick_button){
+//            fang.setPosition(.2);
+//        } else if(operator.right_stick_button){
+//            fang.setPosition(.5);
+//        }
+
+        curOpMode.telemetry.addData("Movable", movable);
+        curOpMode.telemetry.update();
     }
 
     public static void shoot(){
-        lift.setPosition(.5);
         curOpMode.sleep(1000);
         shooter.setPower(.25);
         output.setPower(-1);
         curOpMode.sleep(1500);
         stage1_1.setPower(-.25);
         stage2_1.setPower(-.25);
-        curOpMode.sleep(5000);
+        curOpMode.sleep(2500);
     }
 
     public static void lowerArm(){
+        lift.setPosition(.65);
+        curOpMode.sleep(250);
         lift.setPosition(.35);
     }
 

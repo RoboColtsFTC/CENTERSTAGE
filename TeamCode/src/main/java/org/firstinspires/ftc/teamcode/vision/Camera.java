@@ -76,9 +76,9 @@ public class Camera {
 
         static final int REGION_WIDTH = 50;
         static final int REGION_HEIGHT = 50;
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(25,100);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(125+12,100);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(250,100);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(25,130);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(125+12,130);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(250,130);
 
         Point region1_pointA = new Point(
                 REGION1_TOPLEFT_ANCHOR_POINT.x,

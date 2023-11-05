@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autons.evans;
+package org.firstinspires.ftc.teamcode.autons.hartland;
 
 import static org.firstinspires.ftc.teamcode.manipulator.ManipulatorHardware.lift;
 
@@ -45,20 +45,38 @@ public class BlueRightStay extends LinearOpMode {
 
         // Start
 
-        pos = 1;
+        ManipulatorCommon.lowerArm();
 
-        CommonPrograms.blueRightStart(pos);
+        AutoCommon.encoderDrive(.5, 1000, 10, false);
 
-        AutoCommon.encoderDrive(.5, -500, 10, false);
+        // Left
+        if (pos == 0) {
 
-        AutoCommon.turnToAngleAuton(90);
+            AutoCommon.turnToAngleAuton(90);
 
-        AutoCommon.encoderDrive(.5, -500, 10, false);
+            ManipulatorCommon.releaseGroundPixel();
 
-        lift.setPosition(.5);
+            AutoCommon.encoderDrive(.5, -300, 10, false);
 
-        sleep(1000);
+            // Center
+        } else if (pos == 1) {
+            AutoCommon.encoderStrafe(.5, 10, 200, false, true, false);
 
-        ManipulatorCommon.shoot();
+            AutoCommon.encoderDrive(.5, 200, 10, false);
+
+            ManipulatorCommon.releaseGroundPixel();
+
+            AutoCommon.encoderDrive(.5, -200, 10, false);
+
+            // Right
+        } else {
+
+            AutoCommon.encoderStrafe(.5, 10, 500, false, true, false);
+
+            ManipulatorCommon.releaseGroundPixel();
+
+            AutoCommon.encoderDrive(.5, -500, 10, false);
+        }
+
     }
 }

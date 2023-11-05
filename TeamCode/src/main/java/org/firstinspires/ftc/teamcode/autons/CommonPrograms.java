@@ -101,17 +101,23 @@ public class CommonPrograms {
     public static void blueRightStart(int pos){
         ManipulatorCommon.lowerArm();
 
-        AutoCommon.encoderDrive(.5, 1000, 10, false);
+        AutoCommon.encoderDrive(.5, 1200, 10, false);
 
         // Left
         if(pos == 0){
             AutoCommon.turnToAngleAuton(90);
 
+            AutoCommon.encoderDrive(.5, 100, 10, false);
+
             ManipulatorCommon.releaseGroundPixel();
 
-            AutoCommon.turnToAngleAuton(0);
+            AutoCommon.encoderDrive(.5, -100, 10, false);
 
-            AutoCommon.encoderDrive(.5, 300, 10, false);
+            AutoCommon.encoderStrafe(.5, 10, 300, false, false, false);
+
+            AutoCommon.turnToAngleAuton(1);
+
+//            AutoCommon.encoderDrive(.5, 300, 10, false);
 
             // Center
         } else if (pos == 1){
@@ -121,11 +127,11 @@ public class CommonPrograms {
 
             // Right
         } else {
-            AutoCommon.encoderStrafe(.5, 10, 500, false, true, false);
+            AutoCommon.encoderStrafe(.5, 10, 500, false, false, false);
 
             ManipulatorCommon.releaseGroundPixel();
 
-            AutoCommon.encoderStrafe(.5, 10, 500, true, true, false);
+            AutoCommon.encoderStrafe(.5, 10, 500, true, false, false);
 
             AutoCommon.encoderDrive(.5, 300, 10, false);
         }
@@ -138,34 +144,6 @@ public class CommonPrograms {
 
 
     public static void blueLeftStart(int pos){
-        ManipulatorCommon.lowerArm();
 
-        AutoCommon.encoderDrive(.5, 1000, 10, false);
-
-        // Left
-        if(pos == 0){
-            AutoCommon.encoderStrafe(.5, 10, 500, true, true, false);
-
-            ManipulatorCommon.releaseGroundPixel();
-
-            AutoCommon.encoderStrafe(.5, 10, 500, false, true, false);
-
-            // Center
-        } else if (pos == 1){
-            AutoCommon.encoderDrive(.5, 300, 10, false);
-
-            ManipulatorCommon.releaseGroundPixel();
-
-            AutoCommon.encoderDrive(.5, -300, 10, false);
-
-            // Right
-        } else {
-
-            AutoCommon.encoderTurn(.5, -750, 10);
-
-            ManipulatorCommon.releaseGroundPixel();
-
-            AutoCommon.encoderTurn(.5, 750, 10);
-        }
     }
 }

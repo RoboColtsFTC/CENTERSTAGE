@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autons.evans;
+package org.firstinspires.ftc.teamcode.autons.hartland;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -10,9 +10,9 @@ import org.firstinspires.ftc.teamcode.autons.CommonPrograms;
 import org.firstinspires.ftc.teamcode.manipulator.ManipulatorCommon;
 import org.firstinspires.ftc.teamcode.vision.Camera;
 
-@Autonomous(name="Red Right", group="OnBot")
+@Autonomous(name="Red Left Stay", group="OnBot")
 
-public class RedRight extends LinearOpMode {
+public class RedLeftStay extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
     boolean red=true;
@@ -42,39 +42,36 @@ public class RedRight extends LinearOpMode {
         AutoCommon.resetEncoders();
 
         // Start
+        ManipulatorCommon.lowerArm();
 
-        pos = 2;
-
-        CommonPrograms.redRightStart(pos);
-
-        AutoCommon.turnToAngleAuton(-90);
-
-        AutoCommon.encoderDrive(driveSpeed, 1500, 10, true);
+        AutoCommon.encoderDrive(.5, 1000, 10, false);
 
         // Left
         if(pos == 0){
-            AutoCommon.encoderStrafe(strafeSpeed, 10, 400, true, true, false);
+            AutoCommon.encoderStrafe(.5, 10, 500, true, true, false);
 
-            ManipulatorCommon.shoot();
+            ManipulatorCommon.releaseGroundPixel();
 
-            AutoCommon.encoderStrafe(strafeSpeed, 10, -1600, true, true, false);
+            AutoCommon.encoderDrive(.5, -500, 10, false);
 
-        // Center
+            // Center
         } else if (pos == 1){
-            ManipulatorCommon.shoot();
+            AutoCommon.encoderStrafe(.5, 10, 200, true, true, false);
 
-            AutoCommon.encoderStrafe(strafeSpeed, 10, -1100, true, true, false);
+            AutoCommon.encoderDrive(.5, 200, 10, false);
 
-        // Right
+            ManipulatorCommon.releaseGroundPixel();
+
+            AutoCommon.encoderDrive(.5, -200, 10, false);
+
+            // Right
         } else {
-            AutoCommon.encoderStrafe(strafeSpeed, 10, -400, true, true, false);
 
-            ManipulatorCommon.shoot();
+            AutoCommon.turnToAngleAuton(-90);
 
-            AutoCommon.encoderStrafe(strafeSpeed, 10, -750, true, true, false);
+            ManipulatorCommon.releaseGroundPixel();
 
+            AutoCommon.encoderDrive(.5, -300, 10, false);
         }
-
-        AutoCommon.encoderDrive(driveSpeed, 500, 10, true);
     }
 }
