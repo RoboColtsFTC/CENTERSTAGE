@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode.manipulator;
 
+import static org.firstinspires.ftc.teamcode.Robot.hwMap;
+
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import static org.firstinspires.ftc.teamcode.Robot.hwMap;
 
 public class ManipulatorHardware {
 
@@ -13,6 +14,8 @@ public class ManipulatorHardware {
     public static CRServo output = null;
     public static CRServo stage1_2 = null;
     public static Servo input_lift = null;
+
+    public static Servo fang = null;
 
     public static Servo lift = null;
 
@@ -26,6 +29,7 @@ public class ManipulatorHardware {
         stage1_2 = hwMap.get(CRServo.class, "stage1_2");
         input_lift = hwMap.get(Servo.class, "input_lift");
         lift = hwMap.get(Servo.class, "lift");
+        fang = hwMap.get(Servo.class, "fang");
 //        fang = hwMap.get(Servo.class, "fang");
     }
 }

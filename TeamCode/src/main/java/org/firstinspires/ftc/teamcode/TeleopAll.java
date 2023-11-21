@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.drivetrain.DrivetrainCommon_ALT1.executeDrivetrainTeleop;
 import static org.firstinspires.ftc.teamcode.manipulator.ManipulatorCommon.executeManipulatorTeleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.drivetrain.DrivetrainCommon_ALT1;
-import org.firstinspires.ftc.teamcode.drivetrain.DrivetrainHardware;
+import org.firstinspires.ftc.teamcode.drivetrain.TeleopDrivetrain;
+import org.firstinspires.ftc.teamcode.manipulator.ManipulatorCommon;
+
 
 @TeleOp(name="TeleOp", group="Pushbot")
 //@Disabled
@@ -18,23 +18,16 @@ public class TeleopAll extends LinearOpMode {
     public void runOpMode() {
 
         Robot.DrivetrainLoopState = Robot.LoopStates.Completed;
-        Robot.init(true,true,false,true,true,this);
+        Robot.init(true,true,true,true,true,this);
 
         waitForStart();
 
         while (opModeIsActive()) {
 
-//            if(Robot.DrivetrainLoopState == Robot.LoopStates.Completed) {
-                executeDrivetrainTeleop();
-//            }
-
+            TeleopDrivetrain.executeTeleop();
             executeManipulatorTeleop();
+            Climber.executeClimberTeleop();
 
-            Robot.curOpMode.telemetry.addData("LF:",DrivetrainHardware.driveLF.getCurrentPosition());
-            Robot.curOpMode.telemetry.addData("RF:",DrivetrainHardware.driveRF.getCurrentPosition());
-            Robot.curOpMode.telemetry.addData("LR:",DrivetrainHardware.driveLR.getCurrentPosition());
-            Robot.curOpMode.telemetry.addData("RR:",DrivetrainHardware.driveRR.getCurrentPosition());
-            Robot.curOpMode.telemetry.update();
         }
     }
 

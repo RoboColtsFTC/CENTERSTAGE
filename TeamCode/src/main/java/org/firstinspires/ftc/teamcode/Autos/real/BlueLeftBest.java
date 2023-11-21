@@ -1,0 +1,103 @@
+package org.firstinspires.ftc.teamcode.Autos.real;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.checkerframework.checker.units.qual.C;
+import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.drivetrain.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drivetrain.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.manipulator.ManipulatorCommon;
+import org.firstinspires.ftc.teamcode.vision.Camera;
+
+/*
+ * This is an example of a more complex path to really test the tuning.
+ */
+@Autonomous(group = "drive")
+public class BlueLeftBest extends LinearOpMode {
+    @Override
+
+
+    public void runOpMode() throws InterruptedException {
+        int pos = 0;
+
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        Robot.init(false,true,false,true,false,this);
+
+        Camera camera = new Camera(this, false);
+
+        while(!isStarted()){
+            pos = camera.getResult();
+        }
+
+
+        waitForStart();
+
+
+
+        drive.setPoseEstimate(new Pose2d(12,60, Math.toRadians(90)));
+
+
+        TrajectorySequence left1 = drive.trajectorySequenceBuilder(new Pose2d(12,60, Math.toRadians(90)))
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(23, 40, Math.toRadians(90)), Math.toRadians(-90))
+                .build();
+        TrajectorySequence left2 = drive.trajectorySequenceBuilder(left1.end())
+                .forward(10)
+                .lineToLinearHeading(new Pose2d(45, 38, Math.toRadians(0)))
+                .forward(8, SampleMecanumDrive.getVelocityConstraint(10, Math.toRadians(180), 18),
+                        SampleMecanumDrive.getAccelerationConstraint(10))
+                .build();
+
+
+        TrajectorySequence center1 = drive.trajectorySequenceBuilder(new Pose2d(12,60, Math.toRadians(90)))
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(16, 31, Math.toRadians(90)), Math.toRadians(-90))
+                .build();
+        TrajectorySequence center2 = drive.trajectorySequenceBuilder(center1.end())
+                .lineToLinearHeading(new Pose2d(14, 40, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(45, 31, Math.toRadians(0)))
+                .forward(8, SampleMecanumDrive.getVelocityConstraint(10, Math.toRadians(180), 18),
+                        SampleMecanumDrive.getAccelerationConstraint(10))
+                .build();
+
+
+        TrajectorySequence right1 = drive.trajectorySequenceBuilder(new Pose2d(12,60, Math.toRadians(90)))
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(10, 32, Math.toRadians(0)), Math.toRadians(180))
+                .build();
+        TrajectorySequence right2 = drive.trajectorySequenceBuilder(right1.end())
+                .lineToLinearHeading(new Pose2d(45, 23, Math.toRadians(0)))
+                .forward(8, SampleMecanumDrive.getVelocityConstraint(10, Math.toRadians(180), 18),
+                        SampleMecanumDrive.getAccelerationConstraint(10))
+                .build();
+
+        if(pos == 0){
+            drive.followTrajectorySequence(left1);
+            ManipulatorCommon.releaseGroundPixel();
+            drive.followTrajectorySequence(left2);
+        } else if(pos == 1){
+            drive.followTrajectorySequence(center1);
+            ManipulatorCommon.releaseGroundPixel();
+            drive.followTrajectorySequence(center2);
+        } else if(pos == 2){
+            drive.followTrajectorySequence(right1);
+            ManipulatorCommon.releaseGroundPixel();
+            drive.followTrajectorySequence(right2);
+        }
+
+        ManipulatorCommon.shoot();
+
+        TrajectorySequence rest = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                .back(10)
+                .setTangent(90)
+                .splineToLinearHeading(new Pose2d(56, 60, Math.toRadians(0)), Math.toRadians(0))
+                .build();
+
+        drive.followTrajectorySequence(rest);
+
+        Robot.endAngle = drive.getPoseEstimate().getHeading() + Math.toRadians(90);
+    }
+}

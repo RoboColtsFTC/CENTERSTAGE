@@ -1,33 +1,30 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import org.firstinspires.ftc.teamcode.autons.AutoCommon;
-import org.firstinspires.ftc.teamcode.drivetrain.DrivetrainCommon_ALT1;
-import org.firstinspires.ftc.teamcode.manipulator.ManipulatorCommon;
-
-
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.drivetrain.TeleopDrivetrain;
+import org.firstinspires.ftc.teamcode.manipulator.ManipulatorCommon;
+
 public final class Robot {
     public static LinearOpMode curOpMode;
-    public static AutoCommon auton;
     public static Gamepad driver;
     public static Gamepad operator;
     public static HardwareMap hwMap;
     public static boolean hasManipulator;
     public static boolean hasDrivetrain;
-    public static boolean hasVision;
+    public static boolean hasClimber;
     public static boolean hasSensors;
     public enum LoopStates {Running, Completed};
 
     public static LoopStates DrivetrainLoopState;
     public static LoopStates LiftClawLoopState;
 
+    public static double endAngle = 0;
 
     public static void init(boolean drivetrainAdded, boolean manipulator,
-                            boolean visionAdded, boolean autonAdded,
+                            boolean climberAdded, boolean autonAdded,
                             boolean sensorsAdded,
                             LinearOpMode opMode)
     {
@@ -37,8 +34,10 @@ public final class Robot {
         driver=curOpMode.gamepad1;
         operator=curOpMode.gamepad2;
 
+
+
         if(drivetrainAdded) {
-            DrivetrainCommon_ALT1.initDrivetrainCommon_ALT1();
+            TeleopDrivetrain.initDrivetrain();
             hasDrivetrain = drivetrainAdded;
         }
 
@@ -56,7 +55,11 @@ public final class Robot {
         {
 
         }
-        hasVision=visionAdded;
+
+        if(climberAdded){
+            Climber.initClimber();
+            hasClimber = hasClimber;
+        }
 
 
     }
